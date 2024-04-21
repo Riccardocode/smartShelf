@@ -5,7 +5,7 @@ require 'db.php'; // Include the database connection file
 $firstname = filter_input(INPUT_POST, 'firstname', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 $lastname = filter_input(INPUT_POST, 'lastname', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
-$password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+$password = $_POST['password'];
 $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
 // Handle file upload
