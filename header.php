@@ -12,7 +12,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center">
                 <div class="flex justify-center gap-10 lg:w-0 lg:flex-1">
-                    <a href="#" class="text-2xl font-bold text-white">SmartShelf</a>
+                    <a href="index.php" class="text-2xl font-bold text-white">SmartShelf</a>
                     <?php if (isset($_SESSION['user_id'])) : ?>
                         <a href="viewUser.php" class="no-underline hover:no-underline">
                             <p class="text-2xl font-semibold text-white">Hi <?php echo $_SESSION['firstname'] ?></p>

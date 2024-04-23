@@ -8,36 +8,40 @@ $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
 $password = $_POST['password'];
 $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-// Handle file upload
+// Process image upload
 $imgProfile = null;
-if (isset($_FILES['imgProfile']) && $_FILES['imgProfile']['error'] === UPLOAD_ERR_OK) {
-    // Check if file is an image and sanitize the file name
-    $fileTmpPath = $_FILES['imgProfile']['tmp_name'];
-    $fileName = basename($_FILES['imgProfile']['name']);
-    $fileNameCmps = explode('.', $fileName);
-    $fileExtension = strtolower(end($fileNameCmps));
-    $sanitizedFileName = filter_var($fileNameCmps[0], FILTER_SANITIZE_FULL_SPECIAL_CHARS) . '.' . $fileExtension;
+if (isset($_FILES['imgProfile']) && $_FILES['imgProfile']['error'] == 0) {
+    $allowed = ['jpg', 'jpeg', 'png', 'gif'];
+    $filename = $_FILES['imgProfile']['name'];
+    $filetype = $_FILES['imgProfile']['type'];
+    $filesize = $_FILES['imgProfile']['size'];
+    
 
-    // Allowed file types
-    $allowedfileExtensions = ['jpg', 'gif', 'png', 'jpeg'];
-    if (in_array($fileExtension, $allowedfileExtensions)) {
-        // File upload path
-        $uploadDir = '../uploads/';
-        $uploadFile = $uploadDir . $sanitizedFileName;
-
-        // Move the file to the upload directory
-        if (move_uploaded_file($fileTmpPath, $uploadFile)) {
-            $imgProfile = $uploadFile; // URL to be saved in the database
-        } else {
-            header('Location: register.php?error=upload');
-            exit;
-        }
-    } else {
-        header('Location: register.php?error=filetype');
+    // Verify file extension
+    $ext = pathinfo($filename, PATHINFO_EXTENSION);
+    if (!in_array(strtolower($ext), $allowed)) {
+        echo "Error: Invalid file format";
         exit;
     }
-}
 
+    // Verify file size - 5MB maximum
+    $maxsize = 5 * 1024 * 1024;
+    if ($filesize > $maxsize) {
+        echo "Error: File size is larger than the allowed limit";
+        exit;
+    }
+
+    // Define a new path to store the uploaded file
+    $newfilename =  uniqid('', true) . "." . $ext;
+    if (!move_uploaded_file($_FILES['imgProfile']['tmp_name'], "../uploads/" . $newfilename)) {
+        echo "Error: There was a problem uploading your file. Please try again.";
+        exit;
+    }
+
+    $imgProfile = $newfilename; // Assign new file path to $imgProfile
+} else {
+    $imgProfile = null; // Handle case where no file is uploaded
+}
 // SQL to insert new user using prepared statements
 $sql = "INSERT INTO users (firstname, lastname, email, password, imgProfile) VALUES (:firstname, :lastname, :email, :password, :imgProfile)";
 $stmt = $pdo->prepare($sql);

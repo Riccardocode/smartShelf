@@ -9,7 +9,7 @@
 <body class="bg-gray-100 flex items-center justify-center h-screen">
     <div class="bg-white p-8 rounded-lg shadow-lg max-w-sm">
         <h2 class="mb-6 text-xl font-bold text-center text-gray-900">Register for SmartShelf</h2>
-        <form action="usermanagement/process_register.php" method="POST">
+        <form action="usermanagement/process_register.php" method="POST" enctype="multipart/form-data">
             <div class="mb-4">
                 <label for="firstname" class="block text-gray-700 text-sm font-bold mb-2">First Name</label>
                 <input type="text" id="firstname" name="firstname" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
@@ -40,5 +40,4 @@
             </div>
         </form>
     </div>
-</body>
-</html>
+<?php include 'footer.php'; ?>
