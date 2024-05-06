@@ -1,12 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register - SmartShelf</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gray-100 flex items-center justify-center h-screen">
+<?php require_once('config.php'); ?>
+<?php include($ROOT_PATH . 'header.php') ?>
+<div class="flex items-center justify-center align-center mt-20">
     <div class="bg-white p-8 rounded-lg shadow-lg max-w-sm">
         <h2 class="mb-6 text-xl font-bold text-center text-gray-900">Register for SmartShelf</h2>
         <form action="usermanagement/process_register.php" method="POST" enctype="multipart/form-data">
@@ -26,7 +20,7 @@
                 <label for="password" class="block text-gray-700 text-sm font-bold mb-2">Password</label>
                 <input type="password" id="password" name="password" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline">
             </div>
-           <div class="mb-4">
+            <div class="mb-4">
                 <label for="imgProfile" class="block text-gray-700 text-sm font-bold mb-2">Profile Image</label>
                 <input type="file" id="imgProfile" name="imgProfile" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
             </div>
@@ -40,4 +34,7 @@
             </div>
         </form>
     </div>
+</div>
+</div>
+
 <?php include 'footer.php'; ?>

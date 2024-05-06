@@ -1,13 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - SmartShelf</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gray-100 flex items-center justify-center h-screen">
-    <div class="bg-white p-8 rounded-lg shadow-lg max-w-sm">
+<?php require_once('config.php'); ?>
+<?php include($ROOT_PATH . 'header.php') ?>
+<div class="flex items-center justify-center ">
+    <div class="bg-white p-8 rounded-lg shadow-lg max-w-sm mt-20">
         <h2 class="mb-6 text-xl font-bold text-center text-gray-900">Login to SmartShelf</h2>
         <form action="usermanagement/process_login.php" method="POST">
             <div class="mb-4">
@@ -28,5 +22,7 @@
             </div>
         </form>
     </div>
-</body>
-</html>
+</div>
+
+
+<?php include($ROOT_PATH . '/footer.php') ?>
