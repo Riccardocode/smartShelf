@@ -1,6 +1,6 @@
 <?php
 session_start();
-require 'usermanagement/db.php';
+require 'db.php';
 
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");  // Redirect to login if the user is not logged in

@@ -1,6 +1,6 @@
 <?php
 session_start(); // Start the session at the very beginning
-require 'db.php'; // Include the database connection
+require '../db.php'; // Include the database connection
 
 $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
 $password = $_POST['password']; // Get the password directly

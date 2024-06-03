@@ -1,5 +1,5 @@
 <?php
-require 'db.php'; // Include the database connection file
+require '../db.php'; // Include the database connection
 
 // Sanitize inputs
 $firstname = filter_input(INPUT_POST, 'firstname', FILTER_SANITIZE_FULL_SPECIAL_CHARS);

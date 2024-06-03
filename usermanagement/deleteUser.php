@@ -1,6 +1,6 @@
 <?php
 session_start();
-require 'db.php';
+require '../db.php'; // Include the database connection
 
 if (!isset($_SESSION['user_id'], $_GET['userID'])) {
     header("Location: login.php"); // Redirect to login if user or ID is not in the session

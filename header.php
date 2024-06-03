@@ -30,13 +30,13 @@
                 </div>
                 <nav class="hidden md:flex space-x-10">
 
-                    <a href="#" class="text-base font-medium text-gray-200 hover:text-gray-100">Features</a>
-                    <a href="#" class="text-base font-medium text-gray-200 hover:text-gray-100">About</a>
+                    <a href="./shelf_management/views/createShelf.php" class="text-base font-medium text-gray-200 hover:text-gray-100">Create Shelf</a>
+                    <a href="./shelf_management/views/singleShelf.php" class="text-base font-medium text-gray-200 hover:text-gray-100">ViewShelf</a>
                     <a href="#" class="text-base font-medium text-gray-200 hover:text-gray-100">Contact</a>
                 </nav>
                 <div class="md:flex items-center justify-end md:flex-1 lg:w-0">
                     <?php if (isset($_SESSION['user_id'])) : ?>
-                        <a href="#" class="whitespace-nowrap text-base font-medium text-gray-200 hover:text-gray-100 px-4">Dashboard</a>
+                        <a href="dashboard.php" class="whitespace-nowrap text-base font-medium text-gray-200 hover:text-gray-100 px-4">Dashboard</a>
                         <a href="editUser.php" class="whitespace-nowrap text-base font-medium text-gray-200 hover:text-gray-100 px-4">Edit</a>
                         <a href="usermanagement/logout.php" class="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-blue bg-gray-100 hover:bg-gray-200 md:py-4 md:text-lg md:px-10">Logout</a>
                     <?php else : ?>
