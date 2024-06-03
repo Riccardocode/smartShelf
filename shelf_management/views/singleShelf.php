@@ -1,6 +1,7 @@
 <?php
-session_start();
-require '../../db.php'; // Include the database connection
+
+include('../../header.php');
+require $ROOT_PATH . 'db.php'; // Include the database connection
 
 $shelfID = $_GET['shelfID']; // Get shelf ID from URL
 
@@ -78,5 +79,6 @@ $products = $stmt->fetchAll();
     </div>
 </div>
 
+<?php include('../../footer.php'); ?>
 </body>
 </html>
