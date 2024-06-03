@@ -1,5 +1,5 @@
 <?php
-session_start();
+include 'header.php';
 require 'db.php';
 
 if (!isset($_SESSION['user_id'])) {
@@ -21,7 +21,7 @@ if (!$user) {
 }
 ?>
 
-<?php include 'header.php'; ?>
+
     <div class="flex justify-center items-center min-h-screen bg-gray-100">
         <div class="relative bg-white shadow-lg rounded-lg px-8 py-16 mb-4 w-full max-w-4xl">
             <!-- Profile Image -->
