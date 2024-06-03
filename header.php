@@ -2,12 +2,14 @@
 <?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smart Shelf</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
+
 <body class="bg-gray-50">
     <!-- Header -->
     <header class="bg-indigo-800 py-4 shadow-md">
@@ -15,10 +17,15 @@
             <div class="flex justify-between items-center">
                 <div class="flex justify-center gap-10 lg:w-0 lg:flex-1">
                     <a href="index.php" class="text-2xl font-bold text-white">SmartShelf</a>
-                    <?php if (isset($_SESSION['user_id'])) : ?>
-                        <a href="viewUser.php" class="no-underline hover:no-underline">
-                            <p class="text-2xl font-semibold text-white">Hi <?php echo $_SESSION['firstname'] ?></p>
-                        </a>
+                    <?php
+                    if (isset($_SESSION['user_id'])) : ?>
+                        <div class="flex items-center space-x-4">
+                            <img src="<?php echo htmlspecialchars("uploads/" . $_SESSION['imgProfile']); ?>" alt="Profile Image" class="h-16 w-16 rounded-full border-2 border-white object-cover">
+                            <a href="viewUser.php" class="no-underline hover:no-underline">
+                                <p class="text-2xl font-semibold text-white">Hi <?php echo htmlspecialchars($_SESSION['firstname']); ?></p>
+                            </a>
+                        </div>
+
                     <?php endif; ?>
                 </div>
                 <nav class="hidden md:flex space-x-10">
