@@ -69,6 +69,7 @@ $shelfID = $_GET['shelfID']; // Get shelf ID from URL
 <div id="productModal" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 hidden">
     <div class="bg-white p-6 rounded-lg shadow-lg w-3/4 max-w-lg">
         <h2 class="text-xl font-bold mb-4">Select a Product</h2>
+        <input type="text" id="searchInput" placeholder="Search products..." class="w-full p-2 mb-4 border border-gray-300 rounded-lg">
         <div id="productList" class="overflow-y-auto max-h-64">
             <!-- Products will be loaded here -->
         </div>
@@ -91,21 +92,28 @@ $shelfID = $_GET['shelfID']; // Get shelf ID from URL
     async function fetchProducts() {
         try {
             const response = await fetch(BASE_URL + 'endpoints-API/fetchProductsTemplate.php');
-
+            
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
 
-            const products = await response.json();
+            products = await response.json();
+            displayProducts(products);
+        } catch (error) {
+            console.error('Fetch error:', error);
+            // Optionally, show an error message to the user
+        }
+    }
 
-            const productList = document.getElementById('productList');
-            productList.innerHTML = '';
+    function displayProducts(productsToDisplay) {
+        const productList = document.getElementById('productList');
+        productList.innerHTML = '';
 
-            products.forEach(product => {
-                const productItem = document.createElement('div');
-                productItem.className = 'p-2 border-b border-gray-300 cursor-pointer';
-                productItem.innerHTML = `
-                <div class="flex items-center ">
+        productsToDisplay.forEach(product => {
+            const productItem = document.createElement('div');
+            productItem.className = 'p-2 border-b border-gray-300 cursor-pointer';
+            productItem.innerHTML = `
+                <div class="flex items-center">
                     <img src="${BASE_URL}uploads/${product.imgProduct}" alt="${product.name}" class="h-12 w-12 object-cover rounded-lg mr-4">
                     <div>
                         <p class="font-bold">${product.name}</p>
@@ -113,15 +121,10 @@ $shelfID = $_GET['shelfID']; // Get shelf ID from URL
                     </div>
                 </div>
             `;
-                productItem.onclick = () => selectProduct(product);
-                productList.appendChild(productItem);
-            });
-        } catch (error) {
-            console.error('Fetch error:', error);
-            // Optionally, show an error message to the user
-        }
+            productItem.onclick = () => selectProduct(product);
+            productList.appendChild(productItem);
+        });
     }
-
     function selectProduct(product) {
         document.getElementById('name').value = product.name;
         document.getElementById('category').value = product.category;
@@ -140,6 +143,15 @@ $shelfID = $_GET['shelfID']; // Get shelf ID from URL
 
         hideProductModal();
     }
+
+    document.getElementById('searchInput').addEventListener('input', function() {
+        const searchTerm = this.value.toLowerCase();
+        const filteredProducts = products.filter(product => {
+            return product.name.toLowerCase().includes(searchTerm) || product.category.toLowerCase().includes(searchTerm);
+        });
+        displayProducts(filteredProducts);
+    });
+
 </script>
 
 </body>
