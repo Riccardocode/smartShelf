@@ -48,6 +48,7 @@ if (isset($_FILES['imgProfile']) && $_FILES['imgProfile']['error'] == 0) {
     }
 
     $imgProfile = $newfilename; // Assign new file path to $imgProfile
+    $_SESSION['imgProfile'] = $imgProfile; // Update session variable for immediate display
 } else {
     $imgProfile = $_POST['existingImgProfile']; // Handle case where no file is uploaded but an existing image path is available
 }

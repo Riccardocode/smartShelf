@@ -1,3 +1,12 @@
 /mycaffe.html
 /db_var.php
 /.htaccess
+
+# Ignore all images in the uploads folder
+/uploads/*.jpg
+/uploads/*.jpeg
+/uploads/*.png
+/uploads/*.gif
+/uploads/*.bmp
+/uploads/*.svg
+/uploads/*.webp
