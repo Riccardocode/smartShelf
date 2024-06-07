@@ -1,5 +1,0 @@
-The following tests have been performed:
-
-1. view all products
-2. add new product
-3. view new product

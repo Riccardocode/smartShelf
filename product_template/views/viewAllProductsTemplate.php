@@ -32,7 +32,7 @@ $products = $stmt->fetchAll();
                     <h3 class="text-xl font-bold mb-2"><?php echo htmlspecialchars($product['name']); ?></h3>
                     <p class="text-gray-700"><strong>Category:</strong> <?php echo htmlspecialchars($product['category']); ?></p>
                     <a href="viewSingleProductTemplate.php?templateID=<?php echo $product['templateID']; ?>" class="text-blue-500 hover:underline">View</a>
-                    <a href="viewAllProductsTemplate.php?templateID=<?php echo $product['templateID']; ?>" class="text-blue-500 hover:underline ml-2">Edit</a>
+                    <a href="viewEditProductTemplate.php?templateID=<?php echo $product['templateID']; ?>" class="text-blue-500 hover:underline ml-2">Edit</a>
                     <a href="javascript:void(0);" onclick="openModal(<?php echo $product['templateID']; ?>)" class="text-red-500 hover:underline ml-2">Delete</a>
                 </div>
             <?php endforeach; ?>
