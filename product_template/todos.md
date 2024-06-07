@@ -7,6 +7,8 @@
 # Controllers Implementations
 - [x] implement delete controller
 - [x] implement addNewProductTemplate
+- [ ] implement updateNewProductTemplate
+
 
 
 
@@ -17,5 +19,5 @@
 # Manual Testing
 - [x] viewAllProductsTemplate page
 - [x] viewAddProductsTemplate page
-- [x] vieweditProductsTemplate page
-- [x] viewSingleProductsTemplate page
+- [ ] vieweditProductsTemplate page
+- [ ] viewSingleProductsTemplate page
