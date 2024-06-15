@@ -10,7 +10,10 @@ include('../../header.php');
 ?>
 <div class="container mx-auto p-4">
     <div class="bg-white p-6 rounded-lg shadow-lg">
-        <h1 class="text-3xl font-bold mb-4">Create New Shelf</h1>
+        <div class="flex justify-between items-center mb-4">
+            <h1 class="text-3xl font-bold">Create New Shelf</h1>
+            <a href="<?php echo $BASE_URL; ?>dashboard.php" class="bg-gray-500 text-white px-4 py-2 rounded-lg">Dashboard</a>
+        </div>
         <form action="../controllers/process_shelf_creation.php" method="POST" enctype="multipart/form-data">
             <div class="mb-4">
                 <label for="name" class="block text-gray-700">Shelf Name</label>
@@ -29,4 +32,5 @@ include('../../header.php');
     </div>
 </div>
 </body>
+
 </html>
