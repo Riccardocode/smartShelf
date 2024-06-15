@@ -67,7 +67,15 @@ $products = $stmt->fetchAll();
                             <h3 class="text-xl font-bold mb-2"><?php echo htmlspecialchars($product['name']); ?></h3>
                         </a>
                         <p class="text-gray-700"><strong>Category:</strong> <?php echo htmlspecialchars($product['category']); ?></p>
-                        <p class="text-gray-700"><strong>Quantity:</strong> <?php echo htmlspecialchars($product['currentQuantity']); ?></p>
+                        <p class="text-gray-700"><strong>Quantity:</strong>
+                            <button class="decrease-quantity text-red-500" data-product-id="<?php echo htmlspecialchars($product['productID']); ?>">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                            <span id="quantity-<?php echo htmlspecialchars($product['productID']); ?>"><?php echo htmlspecialchars($product['currentQuantity']); ?></span>
+                            <button class="increase-quantity text-green-500" data-product-id="<?php echo htmlspecialchars($product['productID']); ?>">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </p>
                         <p class="text-gray-700"><strong>Price:</strong> $<?php echo htmlspecialchars($product['price']); ?></p>
                         <p class="text-gray-700"><strong>Expiring Date:</strong> <?php echo htmlspecialchars($product['expiringDate']); ?></p>
                         <div class="mt-4">
@@ -82,5 +90,49 @@ $products = $stmt->fetchAll();
 
     <?php include('../../footer.php'); ?>
 </body>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('.increase-quantity').forEach(button => {
+            button.addEventListener('click', function () {
+                const productId = this.getAttribute('data-product-id');
+                updateQuantity(productId, 'increase');
+            });
+        });
+
+        document.querySelectorAll('.decrease-quantity').forEach(button => {
+            button.addEventListener('click', function () {
+                const productId = this.getAttribute('data-product-id');
+                updateQuantity(productId, 'decrease');
+            });
+        });
+    });
+
+    function updateQuantity(productId, action) {
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', '../controllers/update_quantity.php', true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.onload = function () {
+            if (xhr.status === 200) {
+                try {
+                    const response = JSON.parse(xhr.responseText);
+                    if (response.success) {
+                        document.getElementById('quantity-' + productId).textContent = response.newQuantity;
+                    } else {
+                        alert('Failed to update quantity: ' + response.message);
+                    }
+                } catch (e) {
+                    console.error('Parsing error:', e);
+                    console.log('Response:', xhr.responseText);
+                    alert('Error parsing JSON response');
+                }
+            } else {
+                alert('Error updating quantity');
+            }
+        };
+        xhr.send('productID=' + productId + '&action=' + action);
+    }
+</script>
+
+
 
 </html>

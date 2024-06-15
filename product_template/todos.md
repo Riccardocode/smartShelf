@@ -15,6 +15,7 @@
 
 # ISSUES
 - [ ] Camera button working on mobile but not on desktop
+- [x] Header issue as there is no user profile image and the login and register buttons are shown
 
 
 

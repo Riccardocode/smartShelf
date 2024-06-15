@@ -1,7 +1,7 @@
 <?php
 session_start();
 require 'db.php'; // Include database connection
-
+include('header.php');
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php"); // Not logged in, redirect to login
     exit;

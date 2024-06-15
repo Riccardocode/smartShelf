@@ -1,4 +1,5 @@
 <?php
+session_start();
 require '../../config.php';
 include $ROOT_PATH . 'header.php';
 require $ROOT_PATH . 'db.php'; // Include the database connection

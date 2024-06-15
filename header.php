@@ -51,6 +51,9 @@
                 </nav> -->
                 <div class="hidden md:flex items-center justify-end md:flex-1 lg:w-0">
                     <?php if (isset($_SESSION['user_id'])) : ?>
+                        <?php if ($_SESSION['isAdmin']):?>
+                            <a href="<?php echo htmlspecialchars($BASE_URL . "product_template/views/viewAllProductsTemplate.php"); ?>" class="whitespace-nowrap text-base font-medium text-gray-200 hover:text-gray-100 px-4">Product Template</a>
+                        <?php endif; ?>
                         <a href="<?php echo htmlspecialchars($BASE_URL . "dashboard.php"); ?>" class="whitespace-nowrap text-base font-medium text-gray-200 hover:text-gray-100 px-4">Dashboard</a>
                         <a href="<?php echo htmlspecialchars($BASE_URL . "editUser.php"); ?>" class="whitespace-nowrap text-base font-medium text-gray-200 hover:text-gray-100 px-4">Edit</a>
                         <a href="<?php echo htmlspecialchars($BASE_URL . "usermanagement/logout.php"); ?>" class="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-blue bg-gray-100 hover:bg-gray-200 md:py-4 md:text-lg md:px-10">Logout</a>
@@ -68,10 +71,13 @@
                 </div>
             </div>
             <div id="menu" class="md:hidden mt-4 space-y-1 hidden">
-                <a href="#" class="block px-3 py-2 rounded-md text-base font-medium text-gray-200 hover:text-gray-100">Create Shelf</a>
+                <!-- <a href="#" class="block px-3 py-2 rounded-md text-base font-medium text-gray-200 hover:text-gray-100">Create Shelf</a>
                 <a href="#" class="block px-3 py-2 rounded-md text-base font-medium text-gray-200 hover:text-gray-100">View Shelf</a>
-                <a href="#" class="block px-3 py-2 rounded-md text-base font-medium text-gray-200 hover:text-gray-100">Contact</a>
+                <a href="#" class="block px-3 py-2 rounded-md text-base font-medium text-gray-200 hover:text-gray-100">Contact</a> -->
                 <?php if (isset($_SESSION['user_id'])) : ?>
+                    <?php if ($_SESSION['isAdmin']):?>
+                        <a href="<?php echo htmlspecialchars($BASE_URL . "product_template/views/viewAllProductsTemplate.php"); ?>" class="whitespace-nowrap text-base font-medium text-gray-200 hover:text-gray-100 px-3">Product Template</a>
+                    <?php endif; ?>
                     <a href="<?php echo htmlspecialchars($BASE_URL . "dashboard.php"); ?>" class="block px-3 py-2 rounded-md text-base font-medium text-gray-200 hover:text-gray-100">Dashboard</a>
                     <a href="<?php echo htmlspecialchars($BASE_URL . "editUser.php"); ?>" class="block px-3 py-2 rounded-md text-base font-medium text-gray-200 hover:text-gray-100">Edit</a>
                     <a href="<?php echo htmlspecialchars($BASE_URL . "usermanagement/logout.php"); ?>" class="block px-3 py-2 rounded-md text-base font-medium text-blue bg-gray-100 hover:bg-gray-200">Logout</a>

@@ -1,4 +1,5 @@
 <?php
+session_start();
 require '../../config.php';
 include $ROOT_PATH . 'header.php';
 include "../controllers/controllerEditProductTemplate.php";

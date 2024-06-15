@@ -1,5 +1,5 @@
 # Views implementations
-
+- [ ] implement the edit product
 
 # Controllers Implementations
 
