@@ -1,12 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create New Shelf</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-</head>
-<body class="bg-gray-100">
+<?php
+require_once('../../config.php');
+session_start();
+if (!isset($_SESSION['user_id'])) {
+    header("Location: " . $BASE_URL . "login.php");
+    exit;
+}
+include('../../header.php');
+
+?>
 <div class="container mx-auto p-4">
     <div class="bg-white p-6 rounded-lg shadow-lg">
         <h1 class="text-3xl font-bold mb-4">Create New Shelf</h1>
