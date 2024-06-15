@@ -1,8 +1,13 @@
 <?php
+session_start();
 require 'db.php'; // Include the database connection
 include('header.php');
 
-
+//if no user is logged in, redirect to login page
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.php"); // Not logged in, redirect to login
+    exit;
+}
 
 $userID = $_SESSION['user_id']; // Get the logged-in user ID
 

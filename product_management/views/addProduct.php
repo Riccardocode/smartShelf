@@ -1,4 +1,5 @@
 <?php
+session_start();
 require '../../config.php';
 include $ROOT_PATH . "header.php"; // Include the header file
 $shelfID = $_GET['shelfID']; // Get shelf ID from URL 
@@ -101,7 +102,7 @@ $shelfID = $_GET['shelfID']; // Get shelf ID from URL
             displayProducts(products);
         } catch (error) {
             console.error('Fetch error:', error);
-            // Optionally, show an error message to the user
+            // show an error message to the user
         }
     }
 
@@ -128,7 +129,7 @@ $shelfID = $_GET['shelfID']; // Get shelf ID from URL
     function selectProduct(product) {
         document.getElementById('name').value = product.name;
         document.getElementById('category').value = product.category;
-        // Optionally, set an image preview
+        // set an image preview
         const imgInput = document.getElementById('imgProductFile');
         const imgPreview = document.getElementById('imgProductPreview');
         if (imgPreview) {

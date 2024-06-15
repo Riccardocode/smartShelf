@@ -1,4 +1,11 @@
 <?php require_once('config.php'); ?>
+
+<?php session_start();
+if (isset($_SESSION['user_id'])) {
+    header('Location: dashboard.php');
+    exit(); // Ensure no further code is executed
+}?>
+
 <?php include($ROOT_PATH . 'header.php') ?>
 <div class="flex items-center justify-center ">
     <div class="bg-white p-8 rounded-lg shadow-lg max-w-sm mt-20">

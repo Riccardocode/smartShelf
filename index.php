@@ -1,6 +1,11 @@
+<?php session_start();
+if (isset($_SESSION['user_id'])) {
+    header('Location: dashboard.php');
+    exit(); // Ensure no further code is executed
+}
+?>
 <?php require_once('config.php'); ?>
-<?php include($ROOT_PATH . 'header.php') ?>
-
+<?php include($ROOT_PATH . 'header.php');?>
     <!-- Hero Section -->
     <div class="relative bg-white overflow-hidden">
         <div class="max-w-7xl mx-auto">

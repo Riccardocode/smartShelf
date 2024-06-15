@@ -11,7 +11,7 @@
 
 
 # UI specific
-
+- [] Improve the usability for the creation of a new product
 
 
 # Manual Testing

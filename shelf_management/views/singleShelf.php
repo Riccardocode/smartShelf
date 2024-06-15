@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 include('../../header.php');
 require $ROOT_PATH . 'db.php'; // Include the database connection
 
