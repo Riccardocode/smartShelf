@@ -59,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         // Define a new path to store the uploaded file
         $newfilename = uniqid('', true) . "." . $ext;
-        if (!move_uploaded_file($_FILES['imgProduct']['tmp_name'], $ROOT_PATH ."uploads/" . $newfilename)) {
+        if (!move_uploaded_file($_FILES['imgProduct']['tmp_name'], "../../uploads/" . $newfilename)) {
             echo "Error: There was a problem uploading your file. Please try again.";
             exit;
         }

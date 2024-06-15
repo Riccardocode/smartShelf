@@ -42,8 +42,8 @@ $shelfID = $_GET['shelfID']; // Get shelf ID from URL
 
 
                 <div class="flex flex-wrap justify-center">
-                    <input type="file" name="imgProductFile" id="imgProductFile" class="hidden" accept="image/*">
-                    <button type="button" onclick="document.getElementById('imgProductFile').click()" class="bg-blue-500 text-white px-4 py-2 rounded-lg flex items-center">
+                    <input type="file" name="imgProduct" id="imgProduct" class="hidden" accept="image/*">
+                    <button type="button" onclick="document.getElementById('imgProduct').click()" class="bg-blue-500 text-white px-4 py-2 rounded-lg flex items-center">
                         <i class="fas fa-upload mr-2"></i>
                         <span class="hidden sm:inline ml-2">Upload from File</span>
                     </button>
@@ -130,7 +130,7 @@ $shelfID = $_GET['shelfID']; // Get shelf ID from URL
         document.getElementById('name').value = product.name;
         document.getElementById('category').value = product.category;
         // set an image preview
-        const imgInput = document.getElementById('imgProductFile');
+        const imgInput = document.getElementById('imgProduct');
         const imgPreview = document.getElementById('imgProductPreview');
         if (imgPreview) {
             imgPreview.src = `${BASE_URL}uploads/${product.imgProduct}`;
