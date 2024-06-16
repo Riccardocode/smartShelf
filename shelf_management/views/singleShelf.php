@@ -60,6 +60,7 @@ $products = $stmt->fetchAll();
                 <a href="<?php echo htmlspecialchars($BASE_URL . "product_management/views/addProduct.php?shelfID=" . $shelfID); ?>" class="bg-blue-500 text-white px-4 py-2 rounded-lg">Add New Product</a>
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                <!-- product card -->
                 <?php foreach ($products as $product) : ?>
                     <div class="bg-white p-4 rounded-lg shadow">
                         <img src="<?php echo $product['imgProduct'] ? "../../uploads/" . htmlspecialchars($product['imgProduct']) : '../../default-product.png'; ?>" alt="Product Image" class="h-48 w-full object-cover rounded-lg mb-4">
@@ -76,7 +77,9 @@ $products = $stmt->fetchAll();
                                 <i class="fas fa-plus"></i>
                             </button>
                         </p>
-                        <p class="text-gray-700"><strong>Price:</strong> $<?php echo htmlspecialchars($product['price']); ?></p>
+                        <p class="text-gray-700"><strong>Unit Price:</strong> $<span id="unitCost-<?php echo htmlspecialchars($product['productID']); ?>"><?php echo htmlspecialchars($product['price']); ?> </span></p>
+                        <p class="text-gray-700"><strong>Cost to Recover:</strong> $<span id="cost-<?php echo htmlspecialchars($product['productID']); ?>"><?php echo htmlspecialchars($product['price']*$product['currentQuantity']); ?></span></p>
+                        <p class="text-gray-700"><strong>Remaining Days:</strong> <span class="remainingDays" data-expiring-date="<?php echo htmlspecialchars($product['expiringDate']); ?>"></span></p>
                         <p class="text-gray-700"><strong>Expiring Date:</strong> <?php echo htmlspecialchars($product['expiringDate']); ?></p>
                         <div class="mt-4">
                             <a href="edit_product.php?productID=<?php echo htmlspecialchars($product['productID']); ?>" class="text-blue-500 hover:underline">Edit</a>
@@ -91,6 +94,25 @@ $products = $stmt->fetchAll();
     <?php include('../../footer.php'); ?>
 </body>
 <script>
+    // Remaining days calculation
+    document.addEventListener('DOMContentLoaded', function() {
+        const remainingDaysElements = document.querySelectorAll('.remainingDays');
+
+        function calculateRemainingDays(expiringDate) {
+            const today = new Date();
+            const expiringDateObj = new Date(expiringDate);
+            const timeDifference = expiringDateObj - today;
+            const daysDifference = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
+            return daysDifference;
+        }
+
+        remainingDaysElements.forEach(function(element) {
+            const expiringDate = element.getAttribute('data-expiring-date');
+            const remainingDays = calculateRemainingDays(expiringDate);
+            element.textContent = remainingDays;
+        });
+    });
+    // Quantity update
     document.addEventListener('DOMContentLoaded', function () {
         document.querySelectorAll('.increase-quantity').forEach(button => {
             button.addEventListener('click', function () {
@@ -116,7 +138,13 @@ $products = $stmt->fetchAll();
                 try {
                     const response = JSON.parse(xhr.responseText);
                     if (response.success) {
-                        document.getElementById('quantity-' + productId).textContent = response.newQuantity;
+                        const quantityElement = document.getElementById('quantity-' + productId);
+                        const costElement = document.getElementById('cost-' + productId);
+                        const unitPrice = document.getElementById('unitCost-' + productId).innerText;
+                        const newQuantity = parseFloat(response.newQuantity);
+                        
+                        quantityElement.textContent = newQuantity;
+                        costElement.textContent = (newQuantity * unitPrice);
                     } else {
                         alert('Failed to update quantity: ' + response.message);
                     }

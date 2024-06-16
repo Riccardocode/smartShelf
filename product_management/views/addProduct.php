@@ -32,14 +32,18 @@ $shelfID = $_GET['shelfID']; // Get shelf ID from URL
             <div class="mb-4">
                 <label for="expiringDate" class="block text-gray-700">Expiring Date</label>
                 <input type="date" name="expiringDate" id="expiringDate" class="w-full p-2 border border-gray-300 rounded-lg">
+                <button type="button" onclick="document.getElementById('expiringDateCamera').click()" class="bg-yellow-500 text-white px-4 py-2 rounded-lg mt-2 flex items-center">
+                    <i class="fas fa-camera mr-2"></i>
+                    Scan Expiring Date
+                </button>
+                <input type="file" id="expiringDateCamera" class="hidden" accept="image/*" capture="environment">
             </div>
             <div class="mb-4">
-                <label for="price" class="block text-gray-700">Price</label>
+                <label for="price" class="block text-gray-700">Unit Price</label>
                 <input type="number" step="0.01" name="price" id="price" class="w-full p-2 border border-gray-300 rounded-lg" required>
             </div>
             <div class="mb-4 text-center">
                 <label for="imgProduct" class="block text-gray-700 mb-2">Product Image</label>
-
 
                 <div class="flex flex-wrap justify-center">
                     <input type="file" name="imgProduct" id="imgProduct" class="hidden" accept="image/*">
@@ -77,6 +81,8 @@ $shelfID = $_GET['shelfID']; // Get shelf ID from URL
         <button type="button" onclick="hideProductModal()" class="bg-red-500 text-white px-4 py-2 rounded-lg mt-4">Close</button>
     </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/tesseract.js@2.1.1/dist/tesseract.min.js"></script>
 
 <script>
     const BASE_URL = '<?php echo $BASE_URL; ?>';
@@ -126,6 +132,7 @@ $shelfID = $_GET['shelfID']; // Get shelf ID from URL
             productList.appendChild(productItem);
         });
     }
+
     function selectProduct(product) {
         document.getElementById('name').value = product.name;
         document.getElementById('category').value = product.category;
@@ -153,8 +160,78 @@ $shelfID = $_GET['shelfID']; // Get shelf ID from URL
         displayProducts(filteredProducts);
     });
 
+    // Handling expiring date scanning
+    document.getElementById('expiringDateCamera').addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        if (file) {
+            Tesseract.recognize(
+                file,
+                'eng',
+                {
+                    logger: m => console.log(m)
+                }
+            ).then(({ data: { text } }) => {
+                const dateText = extractDate(text);
+                if (dateText) {
+                    document.getElementById('expiringDate').value = dateText;
+                } else {
+                    alert('No valid date found. Please try again.');
+                }
+            }).catch(error => {
+                console.error(error);
+                alert('Error recognizing date. Please try again.');
+            });
+        }
+    });
+
+    function extractDate(text) {
+        const datePattern = /(\d{4}-\d{2}-\d{2})|(\d{2}\/\d{2}\/\d{4})|(\d{2}-\d{2}-\d{4})/;
+        const match = text.match(datePattern);
+        if (match) {
+            // Convert date to YYYY-MM-DD format if necessary
+            let date = match[0];
+            if (date.includes('/')) {
+                const parts = date.split('/');
+                date = `${parts[2]}-${parts[0].padStart(2, '0')}-${parts[1].padStart(2, '0')}`;
+            } else if (date.includes('-') && date.length === 10 && date.charAt(2) === '-') {
+                const parts = date.split('-');
+                date = `${parts[2]}-${parts[1].padStart(2, '0')}-${parts[0].padStart(2, '0')}`;
+            }
+            return date;
+        }
+        return null;
+    }
 </script>
+<script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const buyDateInput = document.getElementById('buyDate');
+            const initialQuantityInput = document.getElementById('initialQuantity');
+            const currentQuantityInput = document.getElementById('currentQuantity');
+
+            // Set today's date to the buy date input field
+            const today = new Date();
+            const year = today.getFullYear();
+            const month = ('0' + (today.getMonth() + 1)).slice(-2);
+            const day = ('0' + today.getDate()).slice(-2);
+            buyDateInput.value = `${year}-${month}-${day}`;
+
+            function setInitialQuantity() {
+                currentQuantityInput.value = initialQuantityInput.value;
+            }
+
+            initialQuantityInput.addEventListener('input', setInitialQuantity);
+
+            currentQuantityInput.addEventListener('input', function() {
+                if (parseInt(currentQuantityInput.value) > parseInt(initialQuantityInput.value)) {
+                    currentQuantityInput.value = initialQuantityInput.value;
+                    alert('Current quantity cannot be more than initial quantity.');
+                }
+            });
+
+            // Set the initial quantity value when the page loads
+            setInitialQuantity();
+        });
+    </script>
 
 </body>
-
 </html>
