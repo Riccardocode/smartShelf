@@ -38,14 +38,7 @@ jobs:
           server: ftp.ricode.it
           username: ${{ secrets.FTP_SMARTSHELF_USERNAME }}
           password: ${{ secrets.FTP_SMARTSHELF_PASSWORD }}
-          source: './smartshelf'
-          destination: '/smartshelf'
+          source: './smartshelf/'
+          destination: '/smartshelf/'
           forceSSL: true
           port: 21
-          exclude: |
-            .git*
-            .github*
-            node_modules/**
-            **/*.log
-            **/.env
-            config/*.local.php
