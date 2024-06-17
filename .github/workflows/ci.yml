@@ -39,12 +39,5 @@ jobs:
           ftp-username: ${{ secrets.FTP_SMARTSHELF_USERNAME }}
           ftp-password: ${{ secrets.FTP_SMARTSHELF_PASSWORD }}
           local-dir: ./
-          server-dir: /ricode.it/smartshelf
-          excludes: |
-            .git*
-            .github*
-            node_modules/**
-            **/*.log
-            **/.env
-            config/*.local.php
+          server-dir: /smartshelf
           git-ftp-args: --insecure
