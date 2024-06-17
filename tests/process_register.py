@@ -3,7 +3,7 @@ import requests
 
 class TestRegistration(unittest.TestCase):
     def setUp(self):
-        self.base_url = "http://localhost:8081/smartshelf/usermanagement/process_register.php"
+        self.base_url = "http://ricode.it/smartshelf/usermanagement/process_register.php"
 
     def test_registration_with_valid_input(self):
         payload = {
