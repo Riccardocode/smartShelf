@@ -43,9 +43,9 @@ jobs:
           forceSSL: true
           port: 21
           exclude: |
-          .git*
-          .github*
-          node_modules/**
-          **/*.log
-          **/.env
-          config/*.local.php
+            .git*
+            .github*
+            node_modules/**
+            **/*.log
+            **/.env
+            config/*.local.php
