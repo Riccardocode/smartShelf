@@ -7,10 +7,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4  # Updated to use Node.js 20
+      - name: Checkout code
+        uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v4  # Updated to use Node.js 20
+        uses: actions/setup-python@v4
         with:
           python-version: '3.x'
 
@@ -28,7 +29,8 @@ jobs:
     needs: test
 
     steps:
-      - uses: actions/checkout@v4  # Updated to use Node.js 20
+      - name: Checkout code
+        uses: actions/checkout@v4
 
       - name: Deploy to FTP Server
         uses: SamKirkland/FTP-Deploy-Action@4.2.0
@@ -41,4 +43,8 @@ jobs:
           excludes: |
             .git*
             .github*
+            node_modules/**
+            **/*.log
+            **/.env
+            config/*.local.php
           git-ftp-args: --insecure
