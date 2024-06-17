@@ -20,11 +20,9 @@ if (!validate_input($original_firstname, $firstname) ||
     !validate_input($original_lastname, $lastname) ||
     !validate_input($original_email, $email)) {
     // Redirect to the register page with an error message
-    header("Location: ../register.php?error=specialcharacters");
+    header("Location: ../register.php?error=specialcharacters", true, 302);
     exit;
 }
-
-
 
 $password = $_POST['password'];
 $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
@@ -36,33 +34,33 @@ if (isset($_FILES['imgProfile']) && $_FILES['imgProfile']['error'] == 0) {
     $filename = $_FILES['imgProfile']['name'];
     $filetype = $_FILES['imgProfile']['type'];
     $filesize = $_FILES['imgProfile']['size'];
-    
 
     // Verify file extension
     $ext = pathinfo($filename, PATHINFO_EXTENSION);
     if (!in_array(strtolower($ext), $allowed)) {
-        echo "Error: Invalid file format";
+        header("Location: ../register.php?error=invalidfileformat", true, 302);
         exit;
     }
 
     // Verify file size - 5MB maximum
     $maxsize = 5 * 1024 * 1024;
     if ($filesize > $maxsize) {
-        echo "Error: File size is larger than the allowed limit";
+        header("Location: ../register.php?error=filetoolarge", true, 302);
         exit;
     }
 
     // Define a new path to store the uploaded file
-    $newfilename =  uniqid('', true) . "." . $ext;
+    $newfilename = uniqid('', true) . "." . $ext;
     if (!move_uploaded_file($_FILES['imgProfile']['tmp_name'], "../uploads/" . $newfilename)) {
-        echo "Error: There was a problem uploading your file. Please try again.";
+        header("Location: ../register.php?error=fileuploaderror", true, 302);
         exit;
     }
 
     $imgProfile = $newfilename; // Assign new file path to $imgProfile
 } else {
-    $imgProfile = null; // Handle case where no file is uploaded
+    $imgProfile = null; 
 }
+
 // SQL to insert new user using prepared statements
 $sql = "INSERT INTO users (firstname, lastname, email, password, imgProfile) VALUES (:firstname, :lastname, :email, :password, :imgProfile)";
 $stmt = $pdo->prepare($sql);
@@ -75,11 +73,11 @@ try {
         ':password' => $hashedPassword,
         ':imgProfile' => $imgProfile
     ]);
-    header('Location: ../index.php'); // Redirect to homepage on success
+    header('Location: ../index.php', true, 200); // Redirect to homepage on success
     exit;
 } catch (\PDOException $e) {
     // Redirect back to the register page with an error message
-    header("Location: ../register.php?error=sqlerror");
+    header("Location: ../register.php?error=sqlerror", true, 302);
     exit;
 }
 ?>
