@@ -41,3 +41,4 @@ jobs:
           source: './local_directory/'
           destination: '/smartshelf/'
           forceSSL: true
+          port: 21
