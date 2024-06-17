@@ -35,10 +35,9 @@ jobs:
       - name: Deploy to FTP Server
         uses: SamKirkland/FTP-Deploy-Action@4.2.0
         with:
-          ftp-server: ftp.ricode.it
-          ftp-username: ${{ secrets.FTP_SMARTSHELF_USERNAME }}
-          ftp-password: ${{ secrets.FTP_SMARTSHELF_PASSWORD }}
+          server: ftp.ricode.it
+          username: ${{ secrets.FTP_SMARTSHELF_USERNAME }}
+          password: ${{ secrets.FTP_SMARTSHELF_PASSWORD }}
           source: './local_directory/'
           destination: '/smartshelf/'
           forceSSL: true
-          options: "--delete --verbose"
