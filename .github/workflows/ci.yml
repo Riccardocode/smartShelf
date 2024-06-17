@@ -39,6 +39,6 @@ jobs:
           username: ${{ secrets.FTP_SMARTSHELF_USERNAME }}
           password: ${{ secrets.FTP_SMARTSHELF_PASSWORD }}
           source: './smartshelf/'
-          destination: '/smartshelf/'
+          destination: '/www.ricode.it/smartshelf/'
           forceSSL: true
           port: 21
