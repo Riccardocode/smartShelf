@@ -62,30 +62,31 @@ $products = $stmt->fetchAll();
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                 <!-- product card -->
                 <?php foreach ($products as $product) : ?>
-                    <div class="bg-white p-4 rounded-lg shadow">
-                        <img src="<?php echo $product['imgProduct'] ? "../../uploads/" . htmlspecialchars($product['imgProduct']) : '../../default-product.png'; ?>" alt="Product Image" class="h-48 w-full object-cover rounded-lg mb-4">
-                        <a href="<?php echo htmlspecialchars($BASE_URL . "product_management/views/singleProduct.php?productID=" . $product['productID']); ?>" class="text-blue-500 hover:underline">
-                            <h3 class="text-xl font-bold mb-2"><?php echo htmlspecialchars($product['name']); ?></h3>
-                        </a>
-                        <p class="text-gray-700"><strong>Category:</strong> <?php echo htmlspecialchars($product['category']); ?></p>
-                        <p class="text-gray-700"><strong>Quantity:</strong>
-                            <button class="decrease-quantity text-red-500" data-product-id="<?php echo htmlspecialchars($product['productID']); ?>">
-                                <i class="fas fa-minus"></i>
-                            </button>
-                            <span id="quantity-<?php echo htmlspecialchars($product['productID']); ?>"><?php echo htmlspecialchars($product['currentQuantity']); ?></span>
-                            <button class="increase-quantity text-green-500" data-product-id="<?php echo htmlspecialchars($product['productID']); ?>">
-                                <i class="fas fa-plus"></i>
-                            </button>
-                        </p>
-                        <p class="text-gray-700"><strong>Unit Price:</strong> $<span id="unitCost-<?php echo htmlspecialchars($product['productID']); ?>"><?php echo htmlspecialchars($product['price']); ?> </span></p>
-                        <p class="text-gray-700"><strong>Cost to Recover:</strong> $<span id="cost-<?php echo htmlspecialchars($product['productID']); ?>"><?php echo htmlspecialchars($product['price']*$product['currentQuantity']); ?></span></p>
-                        <p class="text-gray-700"><strong>Remaining Days:</strong> <span class="remainingDays" data-expiring-date="<?php echo htmlspecialchars($product['expiringDate']); ?>"></span></p>
-                        <p class="text-gray-700"><strong>Expiring Date:</strong> <?php echo htmlspecialchars($product['expiringDate']); ?></p>
-                        <div class="mt-4">
-                            <a href="edit_product.php?productID=<?php echo htmlspecialchars($product['productID']); ?>" class="text-blue-500 hover:underline">Edit</a>
-                            <a href="<?php echo htmlspecialchars($BASE_URL . "product_management/controllers/processRemoveProduct.php?productID=" . $product['productID']); ?>" class="text-red-500 hover:underline ml-2">Remove</a>
+                    <?php if ($product['currentQuantity'] <= 0) continue; ?>
+                        <div class="bg-white p-4 rounded-lg shadow">
+                            <img src="<?php echo $product['imgProduct'] ? "../../uploads/" . htmlspecialchars($product['imgProduct']) : '../../default-product.png'; ?>" alt="Product Image" class="h-48 w-full object-cover rounded-lg mb-4">
+                            <a href="<?php echo htmlspecialchars($BASE_URL . "product_management/views/singleProduct.php?productID=" . $product['productID']); ?>" class="text-blue-500 hover:underline">
+                                <h3 class="text-xl font-bold mb-2"><?php echo htmlspecialchars($product['name']); ?></h3>
+                            </a>
+                            <p class="text-gray-700"><strong>Category:</strong> <?php echo htmlspecialchars($product['category']); ?></p>
+                            <p class="text-gray-700"><strong>Quantity:</strong>
+                                <button class="decrease-quantity text-red-500" data-product-id="<?php echo htmlspecialchars($product['productID']); ?>">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <span id="quantity-<?php echo htmlspecialchars($product['productID']); ?>"><?php echo htmlspecialchars($product['currentQuantity']); ?></span>
+                                <button class="increase-quantity text-green-500" data-product-id="<?php echo htmlspecialchars($product['productID']); ?>">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </p>
+                            <p class="text-gray-700"><strong>Unit Price:</strong> $<span id="unitCost-<?php echo htmlspecialchars($product['productID']); ?>"><?php echo htmlspecialchars($product['price']); ?> </span></p>
+                            <p class="text-gray-700"><strong>Cost to Recover:</strong> $<span id="cost-<?php echo htmlspecialchars($product['productID']); ?>"><?php echo htmlspecialchars($product['price']*$product['currentQuantity']); ?></span></p>
+                            <p class="text-gray-700"><strong>Remaining Days:</strong> <span class="remainingDays" data-expiring-date="<?php echo htmlspecialchars($product['expiringDate']); ?>"></span></p>
+                            <p class="text-gray-700"><strong>Expiring Date:</strong> <?php echo htmlspecialchars($product['expiringDate']); ?></p>
+                            <div class="mt-4">
+                                <!-- <a href="edit_product.php?productID=<?php echo htmlspecialchars($product['productID']); ?>" class="text-blue-500 hover:underline">Edit</a> -->
+                                <a href="<?php echo htmlspecialchars($BASE_URL . "product_management/controllers/processRemoveProduct.php?productID=" . $product['productID']); ?>" class="text-red-500 hover:underline ml-2">Remove</a>
+                            </div>
                         </div>
-                    </div>
                 <?php endforeach; ?>
             </div>
         </div>
@@ -109,7 +110,13 @@ $products = $stmt->fetchAll();
         remainingDaysElements.forEach(function(element) {
             const expiringDate = element.getAttribute('data-expiring-date');
             const remainingDays = calculateRemainingDays(expiringDate);
-            element.textContent = remainingDays;
+            if(remainingDays<0){
+                element.textContent = "Expired";
+                element.style.color = "red";
+            }
+            else
+                element.textContent = remainingDays;
+            
         });
     });
     // Quantity update

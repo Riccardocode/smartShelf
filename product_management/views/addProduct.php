@@ -58,6 +58,7 @@ $shelfID = $_GET['shelfID']; // Get shelf ID from URL
                         <span class="hidden sm:inline ml-2">Capture from Camera</span>
                     </button>
                 </div>
+                <input type="hidden" name="templateImagePath" id="templateImagePath">
 
             </div>
             <div class="mb-4 text-center">
@@ -136,6 +137,8 @@ $shelfID = $_GET['shelfID']; // Get shelf ID from URL
     function selectProduct(product) {
         document.getElementById('name').value = product.name;
         document.getElementById('category').value = product.category;
+        document.getElementById('templateImagePath').value = product.imgProduct; // Set the hidden field value
+
         // set an image preview
         const imgInput = document.getElementById('imgProduct');
         const imgPreview = document.getElementById('imgProductPreview');

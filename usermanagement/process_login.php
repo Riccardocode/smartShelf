@@ -1,7 +1,7 @@
 <?php
 session_start(); // Start the session at the very beginning
 require '../db.php'; // Include the database connection
-
+require '../product_management/controllers/controllerGetExpiringProduct.php';
 $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
 $password = $_POST['password']; // Get the password directly
 
@@ -17,6 +17,7 @@ if ($user && password_verify($password, $user['password'])) {
     $_SESSION['firstname'] = $user['firstname'];
     $_SESSION['imgProfile'] = $user['imgProfile'];
     $_SESSION['isAdmin'] = $user['isAdmin'];
+    $_SESSION['expiringProducts'] = expiringProducts($user['userID'], $pdo); // Get expiring products for the user
     header("Location: ../index.php"); // Redirect to a logged-in page
     exit;
 } else {

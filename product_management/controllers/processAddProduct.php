@@ -34,10 +34,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $buyDate = filter_input(INPUT_POST, 'buyDate', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     $expiringDate = filter_input(INPUT_POST, 'expiringDate', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     $price = filter_input(INPUT_POST, 'price', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+    $templateImagePath = $_POST['templateImagePath']; // Get the template image path
 
     // Process image upload
     $imgProduct = null;
-    if (isset($_FILES['imgProduct']) && $_FILES['imgProduct']['error'] == 0) {
+    if (!empty($templateImagePath)) {
+        // Use the image path from the template
+        $imgProduct = $templateImagePath;
+    } else if (isset($_FILES['imgProduct']) && $_FILES['imgProduct']['error'] == 0) {
         $allowed = ['jpg', 'jpeg', 'png', 'gif'];
         $filename = $_FILES['imgProduct']['name'];
         $filetype = $_FILES['imgProduct']['type'];
