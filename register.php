@@ -3,6 +3,12 @@
 <div class="flex items-center justify-center align-center mt-20">
     <div class="bg-white p-8 rounded-lg shadow-lg max-w-sm">
         <h2 class="mb-6 text-xl font-bold text-center text-gray-900">Register for SmartShelf</h2>
+        <?php if (isset($_GET['error']) && $_GET['error'] == 'specialcharacters') : ?>
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+                <strong class="font-bold">Registration failed!</strong>
+                <span class="block sm:inline"> Your input contains special characters. Please try again.</span>
+            </div>
+        <?php endif; ?>
         <form action="usermanagement/process_register.php" method="POST" enctype="multipart/form-data">
             <div class="mb-4">
                 <label for="firstname" class="block text-gray-700 text-sm font-bold mb-2">First Name</label>

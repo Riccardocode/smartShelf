@@ -1,10 +1,31 @@
 <?php
 require '../db.php'; // Include the database connection
 
+// Function to compare original and sanitized inputs
+function validate_input($original, $sanitized) {
+    return $original === $sanitized;
+}
+
 // Sanitize inputs
+$original_firstname = $_POST['firstname'];
+$original_lastname = $_POST['lastname'];
+$original_email = $_POST['email'];
+
 $firstname = filter_input(INPUT_POST, 'firstname', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 $lastname = filter_input(INPUT_POST, 'lastname', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
+
+// Check if sanitized inputs are equal to original inputs
+if (!validate_input($original_firstname, $firstname) ||
+    !validate_input($original_lastname, $lastname) ||
+    !validate_input($original_email, $email)) {
+    // Redirect to the register page with an error message
+    header("Location: ../register.php?error=specialcharacters");
+    exit;
+}
+
+
+
 $password = $_POST['password'];
 $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
