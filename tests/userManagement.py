@@ -4,6 +4,7 @@ import requests
 
 class TestRegistration(unittest.TestCase):
     def setUp(self):
+        #host was set to ricode.it before, but since there were permission issues and not much time, the tests have been done locally
         host = "http://localhost:8081/smartshelf"
         self.register_url = host + "/usermanagement/process_register.php"
         self.login_url = host +"/usermanagement/process_login.php"
