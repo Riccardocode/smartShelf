@@ -73,7 +73,7 @@ try {
         ':password' => $hashedPassword,
         ':imgProfile' => $imgProfile
     ]);
-    header('Location: ../index.php', true, 200); // Redirect to homepage on success
+    header('Location: ../login.php'); // Redirect to homepage on success
     exit;
 } catch (\PDOException $e) {
     // Redirect back to the register page with an error message
